@@ -3,6 +3,7 @@
 PROJECT_VIRTUALENV_NAME=up
 WORKON_HOME=/home/vagrant/.virtualenvs
 PROJECT_HOME=/vagrant
+DJANGO_HOME=$PROJECT_HOME/up
 BASHRC=/home/vagrant/.bashrc
 VIRTUALENVWRAPPER_LOCATION=/usr/local/bin/virtualenvwrapper.sh
 
@@ -25,3 +26,7 @@ setvirtualenvproject $VIRTUAL_ENV $PROJECT_HOME
 
 # Install requirements
 pip install -r $PROJECT_HOME/requirements.txt
+
+# Run migrations
+cd $DJANGO_HOME
+python manage.py migrate
