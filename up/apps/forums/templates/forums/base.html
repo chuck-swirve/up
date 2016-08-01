@@ -1,0 +1,92 @@
+{% load staticfiles %}
+<?DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{% block title %}Utopia Forums{% endblock title %}</title>
+        <meta name="description" content="110% totally uncensored political and religious debate">
+        <meta name="keywords" content="UP, utopia politics, debate, politics, swirve">
+        <style>
+            body, table, input {
+                font-family: verdana, arial, serif;
+                font-size: 12px;
+                color: #EEE;
+                background-color: #000;
+            }
+
+            .content {
+                margin-left: auto;
+                margin-right: auto;
+                text-align: center;
+            }
+
+            .main {
+                margin-left: auto;
+                margin-right: auto;
+                border-spacing: 1px;
+                width: 600px;
+            }
+
+            .header {
+                font-weight: normal;
+                text-align: left;
+            }
+
+            .cell {
+                vertical-align: top;
+            }
+
+            .breadcrumb {
+                margin-bottom: 0px;
+            }
+
+            .color-base {
+                background-color: #2b3849
+            }
+
+            .color-contrast {
+                background-color: #003;
+            }
+
+            .small {
+                font-size: 11px;
+                font-weight: normal;
+            }
+
+            .highlight {
+                color: #C0C0C0;
+                background-color: #003;
+            }
+
+            .banner {
+                width: 470px;
+                height: 165px;
+                border: none;
+            }
+
+            .bold {
+                font-weight: bold;
+            }
+
+            :link {
+                color: #9CF;
+            }
+
+            :visited {
+                color: #69C;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="content">
+            <div>
+                <img src="http://utopiaforums.com/images/dark2.gif" class="banner" alt="Welcome to the Utopia Forums">
+            </div>
+            <p>Welcome to the Utopia Forums! <a href="http://google.com">Register a new account</a></p>
+            <p>
+                The current time is {% now "D M d H:i:s Y" %}<br>
+            </p>
+            {% block content %}
+            {% endblock content %}
+        </div>
+    </body>
+</html>
