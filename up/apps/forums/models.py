@@ -17,6 +17,8 @@ class BaseModel(models.Model):
 
 class Forum(BaseModel):
     name = models.CharField(max_length=50, unique=True)
+    tagline = models.CharField(max_length=140)
+    post_count = models.PositiveIntegerField(default=0)
     slug = models.SlugField(max_length=50, unique=True)
 
     def __repr__(self):
@@ -28,6 +30,7 @@ class Thread(BaseModel):
     author = models.ForeignKey(settings.AUTH_USER_MODEL)
     forum = models.ForeignKey(Forum, related_name='threads')
     is_sticky = models.BooleanField(default=False)
+    post_count = models.PositiveIntegerField(default=0)
 
     def __repr__(self):
         return '<Thread: {}>'.format(self.title)
