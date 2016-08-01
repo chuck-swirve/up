@@ -1,0 +1,44 @@
+{% extends 'forums/base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+{% block breadcrumb %}
+<p class="breadcrumb">
+    <a href="{% url 'get-forum-list' %}">Utopia Talk</a> /
+    {{ forum.name }}
+</p>
+{% endblock breadcrumb %}
+<table class="main">
+    <thead>
+        <tr class="color-contrast">
+            <th width="350" class="header">Topic</th>
+            <th class="header">Posts</th>
+            <th class="header">Originator</th>
+            <th class="header">Last Post</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for thread in threads %}
+        <tr>
+            <td class="color-base cell">
+                <a href="{% url 'get-thread-detail' forum.slug thread.id %}">
+                    {{ thread.title }}
+                </a>
+                {% if thread.is_sticky %}
+                <span>(sticky)</span>
+                {% endif %}
+            </td>
+            <td class="color-contrast cell">
+                {{ thread.post_count }}
+            </td>
+            <td class="color-base cell">
+                {{ thread.author.username }}
+            </td>
+            <td class="color-contrast cell">
+                {{ thread.updated|date:"D M d" }} {{ thread.updated|time:"H:i:s" }}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock content %}
