@@ -1,0 +1,36 @@
+{% extends 'forums/base.html' %}
+{% load staticfiles %}
+{% block title %}{{ block.super }} | {{ forum.name }} | {{ thread.title|truncatewords:5 }}{% endblock title %}
+
+{% block content %}
+{% block breadcrumb %}
+<p class="breadcrumb">
+    <a href="{% url 'get-forum-list' %}">Utopia Talk</a> /
+    <a href="{% url 'get-forum-detail' forum.slug %}">{{ forum.name }}</a> /
+    {{ thread.title }}
+</p>
+{% endblock breadcrumb %}
+<table class="main">
+    <thead>
+    </thead>
+    <tbody>
+        {% for post in posts %}
+        <tr>
+            <th class="header color-contrast cell bold">
+                <span>{{ post.author }}</span><br>
+                {% comment %}
+                Add member tags
+                {% endcomment %}
+                <span class="small">Member</span>
+            </th>
+            <td class="color-base cell bold" width="400">
+                <span class="small">
+                    {{ post.created|date:"D M d, Y" }} {{ post.created|time:"H:i:s" }}
+                </span><br>
+                {{ post.content|linebreaks }}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock content %}
