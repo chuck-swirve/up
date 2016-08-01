@@ -1,0 +1,26 @@
+{% extends 'forums/base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+<table class="main">
+    <thead>
+        <tr class="color-contrast">
+            <th width="400" class="header">Message Area</th>
+            <th width="50" class="header">Posts</th>
+            <th width="150" class="header">Last Post</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for forum in forums %}
+        <tr>
+            <td class="color-base cell">
+                <a href="{% url 'get-forum-detail' forum.slug %}" class="bold">{{ forum.name }}</a>
+                <br>{{ forum.tagline }}</br>
+            </td>
+            <td class="color-contrast cell">{{ forum.post_count }}</td>
+            <td class="color-base cell">{{ forum.updated|date:"D M d" }} {{ forum.updated|time:"H:i:s" }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock content %}
