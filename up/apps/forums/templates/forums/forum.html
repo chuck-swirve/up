@@ -41,4 +41,10 @@
         {% endfor %}
     </tbody>
 </table>
+<form action="{% url 'get-forum-detail' forum_slug=forum.slug %}" method="POST">
+    {% csrf_token %}
+    {{ thread_form }}
+    {{ post_form }}
+    <input type="submit" value="Submit">
+</form>
 {% endblock content %}
