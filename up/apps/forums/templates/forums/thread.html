@@ -27,7 +27,7 @@
                 <span class="small">
                     {{ post.created|date:"D M d, Y" }} {{ post.created|time:"H:i:s" }}
                 </span><br>
-                {{ post.content|linebreaks }}
+                {{ post.content|linebreaks|urlize }}
             </td>
         </tr>
         {% endfor %}
