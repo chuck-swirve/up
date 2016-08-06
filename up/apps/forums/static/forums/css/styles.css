@@ -1,0 +1,116 @@
+body, table, input {
+    font-family: verdana, arial, serif;
+    font-size: 12px;
+}
+
+body, table {
+    color: #EEE;
+    background-color: #000;
+}
+
+input, textarea {
+    background-color: #FFF;
+    color: #000;
+    border-radius: 5px;
+}
+
+input[type="submit"] {
+    background-color: #F0F1F2;
+}
+
+.content {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    width: 600px;
+}
+
+.main {
+    text-align: left;
+    margin-left: auto;
+    margin-right: auto;
+    border-spacing: 1px;
+    width: 600px;
+}
+
+th {
+    font-weight: normal;
+}
+
+.cell {
+    vertical-align: top;
+}
+
+.cell p:first-of-type {
+    margin-top: 1em;
+}
+
+.cell p:last-of-type {
+    margin-bottom: 0px;
+}
+
+.breadcrumb {
+    margin-bottom: 0px;
+}
+
+.color-base {
+    background-color: #2b3849
+}
+
+.color-contrast {
+    background-color: #003;
+}
+
+.small {
+    font-size: 11px;
+    font-weight: normal;
+}
+
+.highlight {
+    color: #C0C0C0;
+    background-color: #003;
+}
+
+.banner {
+    width: 470px;
+    height: 165px;
+    border: none;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.header-topic {
+    width: 350px;
+}
+
+.post-div {
+    margin-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 360px;
+}
+
+.post-field-wrapper {
+    text-align: left;
+    float: left;
+    clear: both;
+    margin-bottom: 10px;
+}
+
+.post-badge-wrapper {
+    float: right;
+}
+
+.post-field-wrapper label {
+    display: block;
+}
+
+:link {
+    color: #9CF;
+}
+
+:visited {
+    color: #69C;
+}
