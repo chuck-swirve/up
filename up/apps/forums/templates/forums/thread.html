@@ -33,4 +33,14 @@
         {% endfor %}
     </tbody>
 </table>
+{% if posts.count < 100 %}
+<form action="{% url 'get-thread-detail' forum_slug=forum.slug thread_id=thread.id %}"
+      method="POST">
+    {% csrf_token %}
+    {{ post_form }}
+    <input type="submit" value="Submit">
+</form>
+{% else %}
+<span>No mas posts por favor.</span>
+{% endif %}
 {% endblock content %}
