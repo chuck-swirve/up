@@ -1,4 +1,4 @@
-{% load staticfiles %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -10,9 +10,13 @@
     <body>
         <div class="content">
             <div>
-                <img src="http://utopiaforums.com/images/dark2.gif" class="banner" alt="Welcome to the Utopia Forums">
+                <img src="{% static 'forums/img/dark2.gif' %}"
+                     class="banner" alt="Welcome to the Utopia Forums">
             </div>
-            <p>Welcome to the Utopia Forums! <a href="http://google.com">Register a new account</a></p>
+            <p>
+                Welcome to the Utopia Forums!
+                <a href="http://google.com">Register a new account</a>
+            </p>
             <p>
                 The current time is {% now "D M d H:i:s Y e" %}<br>
             </p>
