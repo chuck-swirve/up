@@ -85,6 +85,18 @@ th {
     width: 350px;
 }
 
+.header-forum-name {
+    width: 400px;
+}
+
+.header-forum-post-count {
+    width: 50px;
+}
+
+.header-forum-updated {
+    width: 150px;
+}
+
 .post-div {
     margin-top: 30px;
     margin-left: auto;
