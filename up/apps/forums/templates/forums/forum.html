@@ -43,8 +43,24 @@
 </table>
 <form action="{% url 'get-forum-detail' forum_slug=forum.slug %}" method="POST">
     {% csrf_token %}
-    {{ thread_form }}
-    {{ post_form }}
-    <input type="submit" value="Submit">
+    {% comment %}
+    TODO: Flash all errors at top of page if present
+    {% endcomment %}
+    <div class="post-div">
+        <div class="post-field-wrapper">
+            {{ thread_form.title.label_tag }}
+            {{ thread_form.title }}
+        </div>
+        <div class="post-badge-wrapper">
+            <img src="{% static 'forums/img/newtopic.gif' %}" alt="Create New Topic">
+        </div>
+        <div class="post-field-wrapper">
+            {{ post_form.content.label_tag }}
+            {{ post_form.content }}
+        </div>
+        <div class="post-field-wrapper">
+            <input type="submit" value="Submit New Topic">
+        </div>
+    </div>
 </form>
 {% endblock content %}
