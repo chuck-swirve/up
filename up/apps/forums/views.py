@@ -37,28 +37,31 @@ def get_forum_detail(request, forum_slug):
         return render(request, 'forums/forum.html', context=context)
     elif request.method == 'POST':
         a_user = User.objects.first()
-        if request.method == 'POST':
-            thread_form = ThreadForm(request.POST)
-            post_form = PostForm(request.POST)
-            if thread_form.is_valid() and post_form.is_valid():
+        thread_form = ThreadForm(request.POST)
+        post_form = PostForm(request.POST)
+        if thread_form.is_valid() and post_form.is_valid():
+            with transaction.atomic():
                 new_thread = thread_form.save(commit=False)
                 new_thread.author = a_user
                 new_thread.post_count = 1
                 new_thread.forum = forum
+                forum.post_count = F('post_count') + 1
                 new_thread.save()
 
                 new_post = post_form.save(commit=False)
                 new_post.author = a_user
                 new_post.thread = new_thread
+
+                new_thread.save()
                 new_post.save()
+                forum.save()
 
-                return HttpResponseRedirect(
-                    reverse(
-                        'get-forum-detail',
-                        kwargs={'forum_slug': forum_slug})
-                )
-    return ''
-
+            return HttpResponseRedirect(
+                reverse(
+                    'get-forum-detail',
+                    kwargs={'forum_slug': forum_slug})
+            )
+    return HttpResponseNotAllowed('')
 
 
 def get_thread_detail(request, forum_slug, thread_id):
