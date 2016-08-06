@@ -4,7 +4,9 @@ from __future__ import (absolute_import, division, print_function,
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
+from django.db import transaction
+from django.db.models import F
+from django.http import HttpResponseRedirect, HttpResponseNotAllowed
 from django.shortcuts import get_object_or_404, render
 
 from .forms import PostForm, ThreadForm
@@ -61,14 +63,37 @@ def get_forum_detail(request, forum_slug):
 
 def get_thread_detail(request, forum_slug, thread_id):
     forum = get_object_or_404(Forum, slug=forum_slug)
-    thread = get_object_or_404(forum.threads, pk=thread_id)
-    posts = Post.objects.filter(
-        thread_id=thread.pk
-    ).filter(is_deleted=False)
-    context = {'forum': forum, 'thread': thread, 'posts': posts}
-    return render(request, 'forums/thread.html', context=context)
+    thread = get_object_or_404(Thread, pk=thread_id)
+    if request.method == 'GET':
+        posts = thread.posts.filter(is_deleted=False)
+        context = {
+            'forum': forum,
+            'thread': thread,
+            'posts': posts,
+            'post_form': PostForm()
+        }
+        return render(request, 'forums/thread.html', context=context)
+    elif request.method == 'POST':
+        a_user = User.objects.first()
+        post_form = PostForm(request.POST)
+        with transaction.atomic():
+            thread.refresh_from_db()
+            if post_form.is_valid() and thread.post_count < 100:
+                new_post = post_form.save(commit=False)
+                new_post.author = a_user
+                new_post.thread = thread
+                thread.post_count = F('post_count') + 1
+                forum.post_count = F('post_count') + 1
 
+                new_post.save()
+                thread.save()
+                forum.save()
 
-@login_required
-def make_thread_post(request, forum_slug, thread_id):
-    return ''
+                return HttpResponseRedirect(
+                    reverse(
+                        'get-thread-detail',
+                        kwargs={
+                            'forum_slug': forum_slug,
+                            'thread_id': thread_id})
+                )
+    return HttpResponseNotAllowed('')
