@@ -7,17 +7,10 @@ from django.contrib.auth import get_user_model
 from . import models
 
 
-class LoginForm(forms.ModelForm):
-    class Meta:
-        model = get_user_model()
-        fields = ['username', 'password']
-        widgets = {
-            'password': forms.PasswordInput(),
-        }
-        labels = {
-            'username': 'Your Name',
-            'password': 'Your Password',
-        }
+class LoginForm(forms.Form):
+    username = forms.CharField(max_length=150, label='Your Name')
+    password = forms.CharField(max_length=128, label='Your Password',
+                               widget = forms.PasswordInput())
 
 
 class ThreadForm(forms.ModelForm):
