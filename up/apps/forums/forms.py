@@ -2,7 +2,6 @@ from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 
 from django import forms
-from django.contrib.auth import get_user_model
 
 from . import models
 
@@ -10,7 +9,7 @@ from . import models
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=150, label='Your Name')
     password = forms.CharField(max_length=128, label='Your Password',
-                               widget = forms.PasswordInput())
+                               widget=forms.PasswordInput())
 
 
 class ThreadForm(forms.ModelForm):
