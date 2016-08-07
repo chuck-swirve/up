@@ -19,7 +19,7 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^accounts/login/$', auth_views.login),
-    url(r'^accounts/logout/$', auth_views.logout),
+    url(r'^account/login/$', auth_views.login, name='auth-login'),
+    url(r'^account/logout/$', auth_views.logout, name='auth-logout'),
     url(r'^', include('forums.urls')),
 ]

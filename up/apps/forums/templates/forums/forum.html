@@ -21,7 +21,7 @@
         {% for thread in threads %}
         <tr>
             <td class="color-base cell">
-                <a href="{% url 'get-thread-detail' forum.slug thread.id %}">
+                <a href="{% url 'get-thread-detail' forum_slug=forum.slug thread_id=thread.id %}">
                     {{ thread.title }}
                 </a>
                 {% if thread.is_sticky %}

@@ -1,9 +1,3 @@
-{% if request.user.is_authenticated %}
-<p>
-    Posting as <span class="bold">{{ request.user.username }}</span>.
-    <a href="{% url '/accounts/logout/' %}?next={{ request.path }}">Logout?</a>
-</p>
-{% else %}
 <div class="post-field-wrapper">
     {{ login_form.username.label_tag }}
     {{ login_form.username }}
@@ -12,4 +6,3 @@
     {{ login_form.password.label_tag }}
     {{ login_form.password }}
 </div>
-{% endif %}
