@@ -42,6 +42,7 @@
     {% endcomment %}
     {% csrf_token %}
     <div class="post-div">
+        {% include 'forums/login.html' %}
         <div class="post-badge-wrapper">
             <img src="{% static 'forums/img/reply.gif' %}" alt="Reply">
         </div>

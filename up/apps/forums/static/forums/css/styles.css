@@ -12,6 +12,11 @@ input, textarea {
     background-color: #FFF;
     color: #000;
     border-radius: 5px;
+    box-sizing: border-box;
+}
+
+textarea {
+    padding: 2px;
 }
 
 input[type="submit"] {
@@ -108,7 +113,7 @@ th {
     text-align: left;
     float: left;
     clear: both;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 
 .post-badge-wrapper {

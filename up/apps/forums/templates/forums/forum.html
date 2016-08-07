@@ -47,6 +47,7 @@
     TODO: Flash all errors at top of page if present
     {% endcomment %}
     <div class="post-div">
+        {% include 'forums/login.html' %}
         <div class="post-field-wrapper">
             {{ thread_form.title.label_tag }}
             {{ thread_form.title }}
