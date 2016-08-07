@@ -8,12 +8,12 @@ from . import views
 
 urlpatterns = [
     url(r'^$',
-        views.get_forum_list,
+        views.ForumListView.as_view(),
         name='get-forum-list'),
     url(r'^boards/(?P<forum_slug>[-\w]+)/$',
-        views.get_forum_detail,
+        views.ForumDetailView.as_view(),
         name='get-forum-detail'),
     url(r'^boards/(?P<forum_slug>[-\w]+)/(?P<thread_id>[0-9])/$',
-        views.get_thread_detail,
+        views.ThreadDetailView.as_view(),
         name='get-thread-detail'),
 ]
