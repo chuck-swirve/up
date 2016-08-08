@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'vagrantize',
 
     # our apps
+    'common',
     'forums',
 ]
 

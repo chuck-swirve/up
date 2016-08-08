@@ -4,18 +4,10 @@ from __future__ import (absolute_import, division, print_function,
 from django.conf import settings
 from django.db import models
 
-
-class BaseModel(models.Model):
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
-    is_deleted = models.BooleanField(default=False)
-
-    class Meta:
-        abstract = True
-        ordering = ['-updated']
+from common import models as common_models
 
 
-class Forum(BaseModel):
+class Forum(common_models.BaseModel):
     name = models.CharField(max_length=50, unique=True)
     tagline = models.CharField(max_length=140)
     post_count = models.PositiveIntegerField(default=0)
@@ -25,18 +17,15 @@ class Forum(BaseModel):
         return '<Forum: {}>'.format(self.name)
 
 
-class Thread(BaseModel):
+class Thread(common_models.BaseModel):
     title = models.CharField(max_length=100)
     author = models.ForeignKey(settings.AUTH_USER_MODEL)
     forum = models.ForeignKey(Forum, related_name='threads')
     is_sticky = models.BooleanField(default=False)
     post_count = models.PositiveIntegerField(default=0)
 
-    def __repr__(self):
-        return '<Thread: {}>'.format(self.title)
 
-
-class Post(BaseModel):
+class Post(common_models.BaseModel):
     author = models.ForeignKey(settings.AUTH_USER_MODEL)
     content = models.TextField()
     thread = models.ForeignKey(Thread, related_name='posts')
