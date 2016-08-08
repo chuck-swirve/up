@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     # our apps
     'common',
     'forums',
+    'messaging',
 ]
 
 MIDDLEWARE_CLASSES = [
