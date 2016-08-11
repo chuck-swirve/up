@@ -21,5 +21,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^account/login/$', auth_views.login, name='auth-login'),
     url(r'^account/logout/$', auth_views.logout, name='auth-logout'),
+    url(r'^messaging/', include('messaging.urls')),
     url(r'^', include('forums.urls')),
 ]
