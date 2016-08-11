@@ -1,0 +1,14 @@
+{% extends 'messaging/base.html' %}
+{% block content %}
+{% for conversation in conversations %}
+<div class="convo {% if conversation.has_unread %}unread{% endif %}">
+    <span class="convo-title {% if conversation.has_unread %}unread{% endif %}">
+        {{ conversation.subject }}
+    </span><br>
+    <span class="convo-preview">
+        {{ conversation.messages.all.0.sender.owner.username }}:
+        {{ conversation.messages.all.0.content|truncatechars:100 }}
+    </span>
+</div>
+{% endfor %}
+{% endblock content %}
