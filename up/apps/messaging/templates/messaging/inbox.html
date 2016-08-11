@@ -9,6 +9,11 @@
         {{ conversation.messages.all.0.sender.owner.username }}:
         {{ conversation.messages.all.0.content|truncatechars:100 }}
     </span>
+    <div class="updated">
+        {{ conversation.messages.all.0.updated|date:"D M d" }}
+        {{ conversation.messages.all.0.updated|time:"H:i:s" }}
+        {{ conversation.messages.all.0.updated|date:"Y e" }}
+    </div>
 </div>
 {% endfor %}
 {% endblock content %}
