@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{% block title %}Utopia Forums{% endblock title %}</title>
+        <meta name="description" content="totally edgy 10/10 would read again">
+        <meta name="keywords" content="UP, utopia politics, debate, politics, swirve, solaria">
+        <link href="{% static 'common/css/styles.css' %}" rel="stylesheet">
+    </head>
+    <body>
+        <div class="content">
+            <div>
+                <img src="{% static 'common/img/dark2.gif' %}"
+                     class="banner" alt="Welcome to the Utopia Forums">
+            </div>
+            <p>
+            {% if request.user.is_authenticated %}
+                You are currently logged in as
+                <em>{{ request.user.username }}</em>
+                <a href="{% url 'auth-logout' %}?next=/">Logout</a>
+            {% else %}
+                Welcome to the Utopia Forums!
+                <a href="http://google.com">Register a new account</a>
+            {% endif %}
+            </p>
+            <p>
+                The current time is {% now "D M d H:i:s Y e" %}<br>
+            </p>
+            {% block content %}
+            {% endblock content %}
+        </div>
+    </body>
+</html>
