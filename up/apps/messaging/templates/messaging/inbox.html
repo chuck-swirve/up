@@ -1,6 +1,8 @@
 {% extends 'messaging/base.html' %}
 {% block content %}
 {% for conversation in conversations %}
+<a href="{% url 'get-conversation-detail' conversation_id=conversation.id %}"
+   class="convo-link">
 <div class="convo {% if conversation.has_unread %}unread{% endif %}">
     <span class="convo-title {% if conversation.has_unread %}unread{% endif %}">
         {{ conversation.subject }}
@@ -15,5 +17,6 @@
         {{ conversation.messages.all.0.updated|date:"Y e" }}
     </div>
 </div>
+</a>
 {% endfor %}
 {% endblock content %}

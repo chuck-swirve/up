@@ -133,6 +133,11 @@ th {
     color: #69C;
 }
 
+a.convo-link {
+    color: inherit;
+    text-decoration: inherit;
+}
+
 .convo {
     padding-left: 10px;
     padding-top: 0.5em;
