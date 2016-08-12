@@ -145,12 +145,31 @@ th {
 }
 
 .unread {
-    background-color: #FFFFFF;
+    background-color: #FFF;
     font-weight: bold;
+}
+
+.unread-message {
+    background-color: #FFF;
 }
 
 .convo-title {
     font-size: 15px;
+}
+
+.message-header {
+    display: block;
+    float: left;
+    text-decoration: underline;
+}
+
+.message-body {
+    float: left;
+    clear: both;
+}
+
+.clear-fix {
+    clear: both;
 }
 
 .updated {

@@ -27,3 +27,21 @@ class InboxView(View):
             'participants', 'messages')
         context = {'conversations': conversations}
         return render(request, self.template_name, context=context)
+
+
+class ConversationView(View):
+    template_name = 'messaging/conversation.html'
+
+    @method_decorator(login_required)
+    def get(self, request, conversation_id, *args, **kwargs):
+        inbox = get_object_or_404(Inbox, pk=request.user.inbox.pk)
+        inbox_convos = inbox.get_conversations()
+        conversation = get_object_or_404(
+            inbox_convos.prefetch_related(
+                'messages',
+                'messages__sender',
+                'messages__sender__owner'
+            ),
+            pk=conversation_id)
+        context = {'conversation': conversation}
+        return render(request, self.template_name, context=context)

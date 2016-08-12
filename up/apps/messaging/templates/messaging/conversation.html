@@ -1,0 +1,19 @@
+{% extends 'messaging/base.html' %}
+{% block content %}
+<div class="convo-title">{{ conversation.title }}</div>
+{% for message in conversation.messages.all %}
+<div class="convo {% if not message.is_read and message.recipient.owner ==  request.user %}unread-message{% endif %}">
+    <span class="message-header">
+        <span class="bold">
+            {{ message.sender.owner.username }}
+        </span> @
+        {{ message.created|date:"D M d, Y" }}
+        {{ message.created|time:"H:i:s e" }}:
+    </span>
+    <div class="message-body">
+        {{ message.content|linebreaks|urlize }}
+    </div>
+    <div class="clear-fix"></div>
+</div>
+{% endfor %}
+{% endblock content%}
