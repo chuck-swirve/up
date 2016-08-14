@@ -6,13 +6,16 @@ from django import forms
 from . import models
 
 
-class LoginForm(forms.Form):
-    username = forms.CharField(max_length=150, label='Your Name')
-    password = forms.CharField(max_length=128, label='Your Password',
-                               widget=forms.PasswordInput())
-
-
 class ThreadForm(forms.ModelForm):
+    username = forms.CharField(max_length=150, label="Your Name",
+                               required=False)
+    password = forms.CharField(max_length=128, label="Your Password",
+                               required=False, widget=forms.PasswordInput())
+    content = forms.CharField(
+        widget=forms.Textarea(attrs={'rows': '10', 'cols': '50'}),
+        label='Your Message'
+    )
+
     class Meta:
         model = models.Thread
         fields = ['title']
@@ -25,6 +28,11 @@ class ThreadForm(forms.ModelForm):
 
 
 class PostForm(forms.ModelForm):
+    username = forms.CharField(max_length=150, label="Your Name",
+                               required=False)
+    password = forms.CharField(max_length=128, label="Your Password",
+                               required=False, widget=forms.PasswordInput())
+
     class Meta:
         model = models.Post
         fields = ['content']

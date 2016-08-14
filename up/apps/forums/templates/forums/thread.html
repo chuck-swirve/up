@@ -42,7 +42,14 @@
     {% endcomment %}
     {% csrf_token %}
     <div class="post-div">
-        {% include 'forums/login.html' %}
+        <div class="post-field-wrapper">
+            {{ post_form.username.label_tag }}
+            {{ post_form.username }}
+        </div>
+        <div class="post-field-wrapper">
+            {{ post_form.password.label_tag }}
+            {{ post_form.password }}
+        </div>
         <div class="post-badge-wrapper">
             <img src="{% static 'common/img/reply.gif' %}" alt="Reply">
         </div>

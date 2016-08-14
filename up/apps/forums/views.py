@@ -13,51 +13,41 @@ from django.shortcuts import redirect
 from django.shortcuts import render
 from django.views.generic import View
 
-from .forms import LoginForm
 from .forms import PostForm
 from .forms import ThreadForm
 from .models import Forum
+from .models import Post
 from .models import Thread
 
 
 User = get_user_model()
 
 
-def _get_login_form(request):
-    if request.user.is_authenticated():
-        return LoginForm(initial={
-            'username': request.user.username,
-        })
-    else:
-        return LoginForm()
-
-
-def _get_user_lazy_login(request, context):
-    login_form = LoginForm(request.POST)
-    context['login_form'] = login_form
-    is_valid = login_form.is_valid()
+def _get_user_lazy_login(request, login_form):
     is_authenticated = request.user.is_authenticated()
-    if is_authenticated and not is_valid:
-        # no new credentials provided
+    if not login_form.is_valid():
+        return None
+
+    username = login_form.cleaned_data['username']
+    password = login_form.cleaned_data['password']
+
+    if is_authenticated and username == request.user.username:
         return request.user
-    elif is_authenticated and is_valid:
-        # new credentials provided
+    elif is_authenticated and username != request.user.username:
         logout(request)
 
-    if is_valid:
-        username = login_form.cleaned_data['username']
-        password = login_form.cleaned_data['password']
-        user = authenticate(username=username, password=password)
-        if user is None:
-            msg = 'That user/password combination is not recognized'
-            login_form.add_error(None, msg)
-        elif user is not None and not user.is_active:
-            msg = 'Your account is disabled.'
-            login_form.add_error(None, msg)
-        elif user is not None and user.is_active:
-            login(request, user)
-            return user
-    return None
+    # if we haven't returned early, login_form is valid and
+    # we need to attempt user authentication
+    user = authenticate(username=username, password=password)
+    if user is None:
+        msg = 'That user/password combination is not recognized'
+        login_form.add_error(None, msg)
+    elif not user.is_active:
+        msg = 'Your account is disabled.'
+        login_form.add_error(None, msg)
+    elif user.is_active:
+        login(request, user)
+    return user
 
 
 class ForumListView(View):
@@ -77,12 +67,15 @@ class ForumDetailView(View):
         threads = Thread.objects.filter(
             forum_id=forum.pk
         ).filter(is_deleted=False)[:100]
+        if request.user.is_authenticated():
+            thread_form = ThreadForm(
+                initial={'username': request.user.username})
+        else:
+            thread_form = ThreadForm()
         context = {
             'forum': forum,
             'threads': threads,
-            'thread_form': ThreadForm(),
-            'post_form': PostForm(),
-            'login_form': _get_login_form(request),
+            'thread_form': thread_form,
         }
         return render(request, self.template_name, context=context)
 
@@ -92,17 +85,15 @@ class ForumDetailView(View):
         # this is inefficient in the common case
         threads = forum.threads.filter(is_deleted=False)[:100]
         thread_form = ThreadForm(request.POST)
-        post_form = PostForm(request.POST)
         context = {
             'forum': forum,
             'threads': threads,
             'thread_form': thread_form,
-            'post_form': post_form,
         }
-        user = _get_user_lazy_login(request, context)
+        user = _get_user_lazy_login(request, thread_form)
         if user is None:
             return render(request, self.template_name, context=context)
-        if thread_form.is_valid() and post_form.is_valid():
+        if thread_form.is_valid():
             try:
                 with transaction.atomic():
                     new_thread = thread_form.save(commit=False)
@@ -112,7 +103,9 @@ class ForumDetailView(View):
                     forum.post_count = F('post_count') + 1
                     new_thread.save()
 
-                    new_post = post_form.save(commit=False)
+                    content = thread_form.cleaned_data['content']
+                    new_post = Post()
+                    new_post.content = content
                     new_post.author = request.user
                     new_post.thread = new_thread
 
@@ -137,12 +130,15 @@ class ThreadDetailView(View):
         forum = get_object_or_404(Forum, slug=forum_slug)
         thread = get_object_or_404(forum.threads, pk=thread_id)
         posts = thread.posts.all()
+        if request.user.is_authenticated():
+            post_form = PostForm(initial={'username': request.user.username})
+        else:
+            post_form = PostForm()
         context = {
             'forum': forum,
             'thread': thread,
             'posts': posts,
-            'post_form': PostForm(),
-            'login_form': _get_login_form(request),
+            'post_form': post_form,
         }
         return render(request, self.template_name, context=context)
 
@@ -159,12 +155,11 @@ class ThreadDetailView(View):
             'posts': posts,
             'post_form': post_form,
         }
-        user = _get_user_lazy_login(request, context)
+        user = _get_user_lazy_login(request, post_form)
         if user is None:
             return render(request, self.template_name, context)
         try:
             with transaction.atomic():
-                thread.refresh_from_db()
                 if thread.post_count >= 100:
                     post_form.add_error(None, 'Your bacon was preempted.')
                 elif post_form.is_valid():
