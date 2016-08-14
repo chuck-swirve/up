@@ -53,7 +53,7 @@ class InboxView(View):
                     sender, recipient, subject, content)
                 return redirect(
                     'get-conversation-detail',
-                    conversation_id = new_msg.conversation.id)
+                    conversation_id=new_msg.conversation.id)
             except DatabaseError:
                 msg = 'Hmm, there seems to be a problem. Please try later.'
                 msg_form.add_error(None, msg)
@@ -76,5 +76,39 @@ class ConversationView(View):
                 'messages__sender__owner'
             ),
             pk=conversation_id)
-        context = {'conversation': conversation}
+        context = {
+            'conversation': conversation,
+            'msg_form': MessageForm(),
+        }
+        return render(request, self.template_name, context=context)
+
+    @method_decorator(login_required)
+    def post(self, request, conversation_id, *args, **kwargs):
+        inbox = get_object_or_404(Inbox, pk=request.user.inbox.pk)
+        inbox_convos = inbox.get_conversations()
+        conversation = get_object_or_404(
+            inbox_convos.prefetch_related(
+                'messages',
+                'messages__sender',
+                'messages__sender__owner'
+            ),
+            pk=conversation_id
+        )
+        msg_form = MessageForm(request.POST)
+        context = {
+            'conversation': conversation,
+            'msg_form': msg_form
+        }
+        if msg_form.is_valid():
+            try:
+                sender = request.user.inbox
+                content = msg_form.cleaned_data['content']
+                conversation.reply(sender, content)
+                return redirect(
+                    'get-conversation-detail',
+                    conversation_id=conversation.id)
+            except DatabaseError:
+                msg = 'Hmm, there seems to be a problem. Please try later.'
+                msg_form.add_error(None, msg)
+        # either something failed to validate or db barfed
         return render(request, self.template_name, context=context)

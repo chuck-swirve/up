@@ -9,7 +9,7 @@
     </span><br>
     <span class="convo-preview">
         {{ conversation.messages.all.0.sender.owner.username }}:
-        {{ conversation.messages.all.0.content|truncatechars:100 }}
+        {{ conversation.messages.all.0.content|truncatechars:33 }}
     </span>
     <div class="updated">
         {{ conversation.messages.all.0.updated|date:"D M d" }}

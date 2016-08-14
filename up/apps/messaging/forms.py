@@ -11,9 +11,6 @@ User = get_user_model()
 
 
 class MessageForm(forms.ModelForm):
-    send_to = forms.ModelChoiceField(
-        queryset=User.objects.filter(is_active=True),
-        label='To')
 
     class Meta:
         model = models.Message
@@ -28,18 +25,6 @@ class MessageForm(forms.ModelForm):
 
 class NewMessageForm(MessageForm):
     subject = forms.CharField(max_length=150)
-
-
-class ConversationForm(forms.ModelForm):
-    class Meta:
-        model = models.Conversation
-        fields = ['subject']
-        widgets = {
-            'subject': forms.TextInput(attrs={'size': '20'}),
-        }
-
-
-class LoginForm(forms.Form):
-    username = forms.CharField(max_length=150, label='Your Name')
-    password = forms.CharField(max_length=128, label='Your Password',
-                               widget=forms.PasswordInput())
+    send_to = forms.ModelChoiceField(
+        queryset=User.objects.filter(is_active=True),
+        label='To')

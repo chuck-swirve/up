@@ -16,4 +16,17 @@
     <div class="clear-fix"></div>
 </div>
 {% endfor %}
+<form action="{% url 'get-conversation-detail' conversation_id=conversation.id %}"
+      method="POST">
+    {% csrf_token %}
+    <div class="post-div">
+        <div class="post-field-wrapper">
+            {{ msg_form.content.label_tag }}
+            {{ msg_form.content }}
+        </div>
+        <div class="post-field-wrapper">
+            <input type="submit" value="Reply">
+        </div>
+    </div>
+</form>
 {% endblock content%}
