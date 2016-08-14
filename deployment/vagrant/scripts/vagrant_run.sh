@@ -22,7 +22,7 @@ source $VIRTUALENVWRAPPER_LOCATION
 mkvirtualenv $PROJECT_VIRTUALENV_NAME
 add2virtualenv $PROJECT_HOME/up
 add2virtualenv $PROJECT_HOME/up/apps
-setvirtualenvproject $VIRTUAL_ENV $PROJECT_HOME
+setvirtualenvproject $VIRTUAL_ENV $DJANGO_HOME
 
 # Install requirements
 pip install -r $PROJECT_HOME/requirements.txt
