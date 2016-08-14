@@ -83,3 +83,4 @@ class Message(common_models.BaseModel):
             new_message.content = content
             new_message.conversation = new_convo
             new_message.save()
+            return new_message

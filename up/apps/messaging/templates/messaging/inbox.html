@@ -19,4 +19,24 @@
 </div>
 </a>
 {% endfor %}
+<form action="{% url 'get-inbox-detail' %}" method="POST">
+    {% csrf_token %}
+    <div class="post-div">
+        <div class="post-field-wrapper">
+            {{ new_msg_form.send_to.label_tag }}
+            {{ new_msg_form.send_to }}
+        </div>
+        <div class="post-field-wrapper">
+            {{ new_msg_form.subject.label_tag }}
+            {{ new_msg_form.subject }}
+        </div>
+        <div class="post-field-wrapper">
+            {{ new_msg_form.content.label_tag }}
+            {{ new_msg_form.content }}
+        </div>
+        <div class="post-field-wrapper">
+            <input type="submit" value="Send Message">
+        </div>
+    </div>
+</form>
 {% endblock content %}
