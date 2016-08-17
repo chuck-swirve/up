@@ -17,10 +17,17 @@
             {% if request.user.is_authenticated %}
                 You are currently logged in as
                 <em>{{ request.user.username }}</em>
-                <a href="{% url 'auth-logout' %}?next=/">Logout</a>
+                <a href="{% url 'auth_logout' %}?next={{ request.path }}">
+                    Logout
+                </a>
             {% else %}
                 Welcome to the Utopia Forums!
-                <a href="http://google.com">Register a new account</a>
+                <a href="{% url 'registration_register' %}">
+                    Register a new account
+                </a> or
+                <a href="{% url 'auth_login' %}?next={{ request.path }}">
+                    Login
+                </a>
             {% endif %}
             </p>
             <p>
