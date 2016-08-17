@@ -1,0 +1,9 @@
+Hello {{ user.username }},
+
+Thanks for creating an account at UP. To enable your account, you must
+go to {{ activation_key }} within {{ expiration_days }} of the receipt
+of this email.
+
+May the odds be ever in your favor!
+
+{{ site }}
