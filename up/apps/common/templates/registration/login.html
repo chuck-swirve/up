@@ -1,4 +1,10 @@
 {% extends 'registration/base.html' %}
+{% load alerts %}
+
+{% block flashed_messages %}
+{{ block.super }}
+{% render_form_errors form=form %}
+{% endblock flashed_messages %}
 
 {% block content %}
 <form action="{% url 'auth_login'  %}" method="POST">

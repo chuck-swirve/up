@@ -1,6 +1,13 @@
 {% extends 'forums/base.html' %}
-{% load staticfiles %}
+{% load static %}
+{% load alerts %}
+
 {% block title %}{{ block.super }} | {{ forum.name }} | {{ thread.title|truncatewords:5 }}{% endblock title %}
+
+{% block flashed_messages %}
+{{ block.super }}
+{% render_form_errors form=post_form %}
+{% endblock flashed_messages %}
 
 {% block content %}
 {% block breadcrumb %}

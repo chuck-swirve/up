@@ -1,4 +1,11 @@
 {% extends 'messaging/base.html' %}
+{% load alerts %}
+
+{% block flashed_messages %}
+{{ block.super }}
+{% render_form_errors form=new_msg_form %}
+{% endblock flashed_messages %}
+
 {% block content %}
 {% for conversation in conversations %}
 <a href="{% url 'get-conversation-detail' conversation_id=conversation.id %}"

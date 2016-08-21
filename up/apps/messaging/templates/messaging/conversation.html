@@ -1,4 +1,10 @@
 {% extends 'messaging/base.html' %}
+{% load alerts %}
+
+{% block flashed_messages %}
+{{ block.super }}
+{% render_form_errors form=msg_form %}
+{% endblock flashed_messages %}
 {% block content %}
 <div class="convo-title">{{ conversation.title }}</div>
 {% for message in conversation.messages.all %}
