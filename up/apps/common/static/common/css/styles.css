@@ -35,7 +35,12 @@ input[type="submit"] {
     margin-left: auto;
     margin-right: auto;
     border-spacing: 1px;
+    border-collapse: separate;
     width: 600px;
+}
+
+a {
+    text-decoration: underline;
 }
 
 th {
@@ -56,6 +61,7 @@ th {
 
 .breadcrumb {
     margin-bottom: 0px;
+    background-color: inherit;
 }
 
 .color-base {
@@ -123,6 +129,10 @@ th {
 
 .post-field-wrapper label {
     display: block;
+}
+
+.post-div label {
+    font-weight: normal;
 }
 
 :link {
