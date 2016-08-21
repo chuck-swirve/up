@@ -19,6 +19,10 @@ textarea {
     padding: 2px;
 }
 
+select {
+    color: #000;
+}
+
 input[type="submit"] {
     background-color: #F0F1F2;
 }
