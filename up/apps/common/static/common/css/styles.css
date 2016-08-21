@@ -30,6 +30,15 @@ input[type="submit"] {
     width: 600px;
 }
 
+.alerts {
+    position: absolute;
+    width: 100%;
+}
+
+.alert {
+    margin-bottom: 2px;
+}
+
 .main {
     text-align: left;
     margin-left: auto;

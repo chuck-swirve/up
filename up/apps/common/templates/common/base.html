@@ -1,13 +1,23 @@
 {% load static %}
+{% load alerts %}
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <title>{% block title %}Utopia Forums{% endblock title %}</title>
         <meta name="description" content="totally edgy 10/10 would read again">
         <meta name="keywords" content="UP, utopia politics, debate, politics, swirve, solaria">
+        <link href="{% static 'common/css/bootstrap.min.css' %}"
+              rel="stylesheet">
+        <link href="{% static 'common/css/bootstrap-theme.min.css' %}"
+              rel="stylesheet">
         <link href="{% static 'common/css/styles.css' %}" rel="stylesheet">
     </head>
     <body>
+        <div class="alerts">
+            {% block flashed_messages %}
+            {% render_messages %}
+            {% endblock flashed_messages %}
+        </div>
         <div class="content">
             <div>
                 <img src="{% static 'common/img/dark2.gif' %}"
@@ -35,6 +45,10 @@
             </p>
             {% block content %}
             {% endblock content %}
+            {% block basejs %}
+            <script src="{% static 'common/js/jquery-3.1.0.min.js' %}"></script>
+            <script src="{% static 'common/js/bootstrap.min.js' %}"></script>
+            {% endblock basejs %}
         </div>
     </body>
 </html>
