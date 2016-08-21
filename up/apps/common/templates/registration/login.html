@@ -1,0 +1,21 @@
+{% extends 'registration/base.html' %}
+
+{% block content %}
+<form action="{% url 'auth_login'  %}" method="POST">
+    {% csrf_token %}
+    <div class="post">
+        <div class="post-field-wrapper">
+            {{ form.username.label_tag }}
+            {{ form.username }}
+        </div>
+        <div class="post-field-wrapper">
+            {{ form.password.label_tag }}
+            {{ form.password }}
+        </div>
+        <div class="post-field-wrapper">
+            <input type="submit" value="Login">
+            <input type="hidden" name="next" value="{{ next }}">
+        </div>
+    </div>
+</form>
+{% endblock content %}
