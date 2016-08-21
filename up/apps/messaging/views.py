@@ -40,7 +40,7 @@ class InboxView(View):
         inbox = get_object_or_404(Inbox, pk=request.user.inbox.pk)
         new_msg_form = NewMessageForm(request.POST)
         context = {
-            'new_message_form': new_msg_form,
+            'new_msg_form': new_msg_form,
         }
 
         if new_msg_form.is_valid():

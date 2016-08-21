@@ -24,7 +24,7 @@ class MessageForm(forms.ModelForm):
 
 
 class NewMessageForm(MessageForm):
-    subject = forms.CharField(max_length=150)
+    subject = forms.CharField(max_length=150, label='Subject')
     send_to = forms.ModelChoiceField(
         queryset=User.objects.filter(is_active=True),
         label='To')
