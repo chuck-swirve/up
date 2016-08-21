@@ -25,7 +25,6 @@ register = template.Library()
 
 @register.simple_tag
 def render_form_errors(form):
-    import pdb; pdb.set_trace()
     label_fmt = 'Error{}:'
     form_errors = []
     for field_name, errors in form.errors.items():
