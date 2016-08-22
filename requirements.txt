@@ -1,4 +1,5 @@
 django
+django-anymail[mailgun]
 django-registration
 django-vagrantize
 ipython

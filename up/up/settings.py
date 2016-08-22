@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     #third party apps
+    'anymail',
     'vagrantize',
 
     # our apps
@@ -148,7 +149,15 @@ MESSAGE_TAGS = {
 MESSAGE_LEVEL = message_constants.DEBUG
 
 # Dev-mode email
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # django-registration configs
 ACCOUNT_ACTIVATION_DAYS = 7
+
+# ANYMAIL configs
+ANYMAIL = {
+    'MAILGUN_API_KEY': 'key-b211a524edfb2c3a5c1d15745ccd7299',
+    'MAILGUN_SENDER_DOMMAIN': 'mail.utopiafora.com',
+}
+EMAIL_BACKEND = 'anymail.backends.mailgun.MailgunBackend'
+DEFAULT_FROM_EMAIL = 'no-reply@mail.utopiafora.com'

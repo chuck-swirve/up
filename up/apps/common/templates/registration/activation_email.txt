@@ -1,9 +1,8 @@
 Hello {{ user.username }},
 
-Thanks for creating an account at UP. To enable your account, you must
-go to {{ activation_key }} within {{ expiration_days }} of the receipt
-of this email.
+Thanks for creating an account at UP. Please visit
+https://utopiafora.com/accounts/activate/{{ activation_key }}/ within
+{{ expiration_days }} of the receipt of this email to finish
+the account activation process.
 
-May the odds be ever in your favor!
-
-{{ site }}
+- chuck_from_up
