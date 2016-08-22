@@ -27,6 +27,9 @@ chown postgres:postgres $POSTGRES_ETC_DIR/pg_hba.conf
 
 service postgresql restart
 
+echo "DJANGO_SETTINGS_MODULE=up.settings" >> /etc/environment
+echo "IN_PROD=False" >> /etc/environment
+
 # Execute "as-user" provisioning scripts
 VAGRANT_SCRIPTS_DIR=/vagrant/deployment/vagrant/scripts
 sudo -i -u postgres . $VAGRANT_SCRIPTS_DIR/postgres_run.sh

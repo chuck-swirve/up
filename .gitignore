@@ -1,2 +1,3 @@
 *.py[cod]
 .vagrant/
+prod_settings.py
